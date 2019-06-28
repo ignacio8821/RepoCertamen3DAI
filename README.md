@@ -1,4 +1,5 @@
 #herramientas usadas#
+
 1.- Descargar Composer 
 
 2-  Descargar Wamp
@@ -23,6 +24,7 @@
 
 
 #Lenguaje y framework usados#
+
 1.- AJAX
 
 2.- SLIM
