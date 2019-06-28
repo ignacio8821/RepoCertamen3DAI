@@ -1,0 +1,17 @@
+	<table>
+			<tr><td> Rut </td><td>Nombre  </td><td> Usuario </td><td> Password </td><td> Carrera </td></tr>
+			<tr>
+			{% for alumn in alumnos%}
+			<td> {{alumn["rut"]}} </td>
+			{% for usuario in usuarios%}
+				
+			
+					<td> {{usuario["nombre"]}} </td>
+					<td> {{usuario["username"]}} </td>
+					<td> {{usuario["pass"]}} </td>
+			{% endfor%}
+			<td> {{alumn["carrera"]}} </td>
+			{% endfor%}
+
+			</tr>
+	</table>

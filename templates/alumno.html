@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<title>Alumnos</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+	<style type="text/css">
+		td,th{
+			text-align: center;
+		}
+		#texto_total{
+			text-align: right;
+			font-weight: bold;
+		}
+		.item{
+			text-align: left;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="container"  > 
+		<h2>Alumnos</h2>
+
+		<table>
+			<tr>
+				<td style="color: blue"> Rut</td>
+				<td> <input type="text" id="rut"> </td>
+			</tr>
+			<tr>
+				<td style="color: blue"> Nombre</td>
+				<td> <input type="text" id="nombre"> </td>
+			</tr>
+			<tr>
+				<td style="color: blue"> Username</td>
+				<td> <input type="text" id="users"> </td>
+			</tr>
+			<tr>
+				<td style="color: blue"> Password</td>
+				<td> <input type="text" id="pass"> </td>
+			</tr>
+			<tr>
+				<td style="color: blue"> Carrera </td>
+				<td> <input type="text" id="carrera"> </td>
+			</tr>
+			
+			
+		</table>
+		<br><br><br>
+		<input type="button" id="agregar" value="Agregar"  class="btn btn-primary" >
+		<input type="button" id="modificar" value="Modificar" class="btn btn-success">
+		<input type="button" id="eliminar" value="Eliminar" class="btn btn-danger">
+		<br><br><br>
+		<div id="dvdetalle">
+		<h6>tuve un problema que no se veia la consulta completa con ajax</h6>
+		<table>
+			<tr><td> Rut </td><td>Nombre  </td><td> Usuario </td><td> Password </td><td> Carrera </td></tr>
+			<tr>
+			{% for alumn in alumnos%}
+			<td> {{alumn["rut"]}} </td>
+			{% for usuario in usuarios%}
+				
+			
+					<td> {{usuario["nombre"]}} </td>
+					<td> {{usuario["username"]}} </td>
+					<td> {{usuario["pass"]}} </td>
+			{% endfor%}
+			<td> {{alumn["carrera"]}} </td>
+			{% endfor%}
+
+			</tr>
+		</table>
+		</div>
+	</div>
+</body>	
+</html>
+
+<script>
+$("#agregar").click(function(){
+    $.post( "/actalumno",
+                { 	rut: $("#rut").val(),
+                	nombre: $("#nombre").val(),
+                	username: $("#users").val(),
+                	pass: $("#pass").val(),
+                    carrera: $("#carrera").val(),
+
+                	operacion: "agregar"
+                },
+        function(data,status){
+          if (status=="success"){ 
+            $("#dvdetalle").html(data);
+          } else { 
+            mensaje("problema al actualizar el registro!");
+          }   
+        });
+  });
+console.log(rut);
+console.log(nombre);
+console.log(users);
+console.log(pass);
+console.log(carrera);
+$("#modificar").click(function(){
+	$.post(	"/actalumno", 
+			{	rut: $("#rut").val(),
+                nombre: $("#nombre").val(),
+                username: $("#users").val(),
+                pass: $("#pass").val(),
+                carrera: $("#carrera").val(),
+                operacion: "modificar"
+			},
+			function(data,status){
+	          if (status=="success"){ 
+	            $("#dvdetalle").html(data);
+	          } else { 
+	            mensaje("problema al actualizar el registro!");
+	          }   
+	        });
+});
+
+$("#eliminar").click(function(){
+	$.post(	"/actalumno", 
+			{	rut: $("#rut").val(),
+                operacion: "eliminar"
+			},
+			function(data,status){
+	          if (status=="success"){ 
+	            $("#dvdetalle").html(data);
+	          } else { 
+	            mensaje("problema al eliminar el registro!");
+	          }   
+	        });
+});
+
+</script>
